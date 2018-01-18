@@ -1,8 +1,8 @@
 # Data and index files for this repo
 
-ap_88_89/*
-reduced_vectors_google.txt
-index/*
+HW2/ap_88_89/*
+HW2/reduced_vectors_google.txt
+HW2/index/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
