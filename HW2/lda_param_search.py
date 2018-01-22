@@ -204,10 +204,8 @@ lda_similarity_indices = {}
 
 start_time = time.time()
 
-for num_topics in np.arange(25, 201, 25):
+for eta in [None, 'auto']:
     iter_start_time = time.time()
-
-    lda_models[num_topics] = {}
 
     # for chunksize in np.arange(1000, 3001, 1000):
     #     lda_models[num_topics][chunksize] = {}
@@ -221,12 +219,12 @@ for num_topics in np.arange(25, 201, 25):
 
 
     lda = LdaModel(corpus,
-                   num_topics=num_topics,
+                   num_topics=100,
                    chunksize=2000,
                    passes=1,
                    update_every=1,
                    alpha='symmetric',
-                   eta=None,
+                   eta=eta,
                    decay=0.5,
                    offset=1.0,
                    eval_every=10,
@@ -236,14 +234,14 @@ for num_topics in np.arange(25, 201, 25):
                    minimum_phi_value=0.01,
                    per_word_topics=False)
 
-    lda_models[num_topics] = lda
+    lda_models[str(eta)] = lda
 
-    print('Number of topics: {}. Runtime: {} seconds'.format(num_topics,
-                                                             int(time.time() - iter_start_time)))
+    print('Eta: {}. Runtime: {} seconds'.format(str(eta), int(time.time() - iter_start_time)))
 
 run_time = int((time.time() - start_time) / 60)
 print('Grid search took {} minutes.'.format(run_time))
 
-with open('lda_models_num_topics_till200.pickle', 'wb') as f:
+with open('lda_models_eta.pickle', 'wb') as f:
     pickle.dump(lda_models, f)
 
+print('Models saved.')

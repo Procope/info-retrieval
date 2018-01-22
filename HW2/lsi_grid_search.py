@@ -204,19 +204,19 @@ lsi_similarity_indices = {}
 
 start_time = time.time()
 
-for num_topics in np.arange(50, 350, 100):
+for num_topics in np.arange(100, 101, 100):
     lsi_models[num_topics] = {}
     lsi_similarity_indices[num_topics] = {}
 
-    for chunksize in np.arange(10000, 25001, 5000):
+    for chunksize in np.arange(10000, 10001, 10000):
         lsi_models[num_topics][chunksize] = {}
         lsi_similarity_indices[num_topics][chunksize] = {}
 
-        for power_iters in np.arange(1, 4):
+        for power_iters in np.arange(1, 2):
             lsi_models[num_topics][chunksize][power_iters] = {}
             lsi_similarity_indices[num_topics][chunksize][power_iters] = {}
 
-            for onepass in np.arange(2):
+            for onepass in np.arange(1):
                 print('Number of topics: {}. Chunksize: {}. Number of power iterations: {}. One-pass: {}'
                       .format(num_topics, chunksize, power_iters, bool(onepass)))
 
@@ -237,6 +237,8 @@ print('Grid search took {} minutes.'.format(run_time))
 
 with open('lsi_models.pickle', 'wb') as f:
     pickle.dump(lsi_models, f)
+print('Models saved.')
 
 with open('lsi_similarity_indices.pickle', 'wb') as f:
     pickle.dump(lsi_similarity_indices, f)
+print('Similarity indices saved.')
